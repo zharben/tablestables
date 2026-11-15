@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#4338ca"/>
+    </linearGradient>
+    <linearGradient id="star" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde047"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="28" fill="url(#bg)"/>
+  <rect x="14" y="14" width="42" height="42" rx="10" fill="#a5b4fc" opacity="0.35"/>
+  <rect x="64" y="14" width="42" height="42" rx="10" fill="#34d399"/>
+  <rect x="14" y="64" width="42" height="42" rx="10" fill="#f472b6"/>
+  <rect x="64" y="64" width="42" height="42" rx="10" fill="url(#star)"/>
+  <text x="35" y="45" font-family="system-ui, sans-serif" font-weight="800" font-size="28" fill="#ffffff" text-anchor="middle">×</text>
+  <text x="85" y="43" font-family="system-ui, sans-serif" font-weight="800" font-size="22" fill="#064e3b" text-anchor="middle">12</text>
+  <text x="35" y="93" font-family="system-ui, sans-serif" font-weight="800" font-size="22" fill="#831843" text-anchor="middle">24</text>
+  <text x="85" y="93" font-family="system-ui, sans-serif" font-weight="800" font-size="22" fill="#78350f" text-anchor="middle">★</text>
+</svg>
