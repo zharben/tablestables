@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import confetti from 'canvas-confetti';
-import { HelpCircle, RotateCcw, Sparkles, CheckCircle2, Eye, Award } from 'lucide-react';
+import { RotateCcw, Sparkles, CheckCircle2, Award } from 'lucide-react';
 import { getFactStars } from '../utils/storage';
 import { sound } from '../utils/sound';
 
@@ -12,7 +12,6 @@ export default function GridDetectiveMode({ selectedTables, progress, onRecordAt
   const [selectedTileValue, setSelectedTileValue] = useState(null);
   const [tileOptions, setTileOptions] = useState([]); // Array of { id, value, used }
   const [shakeCell, setShakeCell] = useState(null);
-  const [showVisualHint, setShowVisualHint] = useState(false);
   const [roundComplete, setRoundComplete] = useState(false);
 
   // Generate a new round of missing cells on the 12x12 multiplication board
@@ -81,7 +80,6 @@ export default function GridDetectiveMode({ selectedTables, progress, onRecordAt
     setActiveTargetIdx(0);
     setSelectedTileValue(null);
     setTileOptions(tiles);
-    setShowVisualHint(false);
     setRoundComplete(false);
   }, [selectedTables]); // Intentionally only re-seed when selectedTables changes or manual reset
 
@@ -119,7 +117,6 @@ export default function GridDetectiveMode({ selectedTables, progress, onRecordAt
       setTargets(nextTargets);
       setTileOptions(nextTiles);
       setSelectedTileValue(null);
-      setShowVisualHint(false);
 
       // Find next unsolved target
       const nextUnsolvedIdx = nextTargets.findIndex((t, i) => i > targetIdx && !t.solved);
@@ -316,30 +313,16 @@ export default function GridDetectiveMode({ selectedTables, progress, onRecordAt
         </div>
       </div>
 
-      {/* Right Panel: Active Equation Prompt, Visual Dot Array Hint, & Number Tiles Tray */}
+      {/* Right Panel: Active Equation Prompt & Number Tiles Tray */}
       <div className="w-full lg:w-80 xl:w-96 flex flex-col gap-3 min-h-0 max-h-[42%] lg:max-h-none shrink-0">
         {/* Current Active Clue Card */}
-        <div className="bg-indigo-900/80 backdrop-blur-md border border-indigo-700/60 rounded-3xl p-3 sm:p-4 shadow-xl flex flex-col justify-between shrink-0 max-h-[55%] overflow-y-auto custom-scroll">
+        <div className="bg-indigo-900/80 backdrop-blur-md border border-indigo-700/60 rounded-3xl p-3 sm:p-4 shadow-xl flex flex-col justify-between shrink-0">
           {!roundComplete && activeTarget ? (
             <>
               <div className="flex items-center justify-between mb-1">
                 <span className="text-xs font-bold uppercase tracking-wider text-indigo-300">
                   Selected Grid Spot
                 </span>
-                <button
-                  onClick={() => {
-                    sound.playTap();
-                    setShowVisualHint((v) => !v);
-                  }}
-                  className={`btn-tactile flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold transition-colors ${
-                    showVisualHint
-                      ? 'bg-amber-400 text-indigo-950'
-                      : 'bg-indigo-800 text-amber-300 hover:bg-indigo-700'
-                  }`}
-                >
-                  <Eye className="w-3.5 h-3.5" />
-                  <span>{showVisualHint ? 'Hide Dots' : 'Show Dots Hint'}</span>
-                </button>
               </div>
 
               <div className="flex items-center justify-center gap-3 py-2 my-1 bg-indigo-950/70 rounded-2xl border border-indigo-800/80">
@@ -355,29 +338,6 @@ export default function GridDetectiveMode({ selectedTables, progress, onRecordAt
                   ?
                 </span>
               </div>
-
-              {/* Optional Visual Dot Array Hint for Kids */}
-              {showVisualHint && (
-                <div className="mt-2 p-2.5 rounded-2xl bg-indigo-950/90 border border-indigo-800 flex flex-col items-center">
-                  <p className="text-xs text-indigo-200 mb-1.5 font-medium">
-                    <strong className="text-amber-300">{activeTarget.r}</strong> rows of{' '}
-                    <strong className="text-amber-300">{activeTarget.c}</strong> dots:
-                  </p>
-                  <div
-                    className="grid gap-1"
-                    style={{
-                      gridTemplateColumns: `repeat(${activeTarget.c}, minmax(0, 1fr))`,
-                    }}
-                  >
-                    {Array.from({ length: activeTarget.r * activeTarget.c }).map((_, i) => (
-                      <span
-                        key={i}
-                        className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-400 shadow-sm"
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
             </>
           ) : (
             <div className="text-center py-3">
@@ -413,25 +373,24 @@ export default function GridDetectiveMode({ selectedTables, progress, onRecordAt
 
           <div className="flex-1 min-h-0 overflow-y-auto custom-scroll pr-1 -mr-1 py-1">
             <div className="grid grid-cols-5 lg:grid-cols-2 gap-2 sm:gap-2.5 pb-1">
-              {tileOptions.map((tile) => {
-                const isSelected = selectedTileValue?.id === tile.id;
-                return (
-                  <button
-                    key={tile.id}
-                    disabled={tile.used}
-                    onClick={() => handleTileTap(tile)}
-                    className={`btn-tactile h-12 sm:h-14 rounded-2xl font-extrabold text-lg sm:text-2xl flex items-center justify-center transition-all border-b-4 ${
-                      tile.used
-                        ? 'bg-indigo-950/40 text-indigo-700 border-indigo-950/40 opacity-35 cursor-not-allowed'
-                        : isSelected
-                        ? 'bg-amber-400 text-indigo-950 border-amber-600 ring-2 ring-white scale-105 shadow-lg'
-                        : 'bg-gradient-to-b from-white to-indigo-100 text-indigo-950 border-indigo-300 hover:from-amber-200 hover:to-amber-300 hover:border-amber-500 shadow-md'
-                    }`}
-                  >
-                    {tile.used ? '✓' : tile.value}
-                  </button>
-                );
-              })}
+              {tileOptions
+                .filter((tile) => !tile.used)
+                .map((tile) => {
+                  const isSelected = selectedTileValue?.id === tile.id;
+                  return (
+                    <button
+                      key={tile.id}
+                      onClick={() => handleTileTap(tile)}
+                      className={`btn-tactile h-12 sm:h-14 rounded-2xl font-extrabold text-lg sm:text-2xl flex items-center justify-center transition-all border-b-4 ${
+                        isSelected
+                          ? 'bg-amber-400 text-indigo-950 border-amber-600 ring-2 ring-white scale-105 shadow-lg'
+                          : 'bg-gradient-to-b from-white to-indigo-100 text-indigo-950 border-indigo-300 hover:from-amber-200 hover:to-amber-300 hover:border-amber-500 shadow-md'
+                      }`}
+                    >
+                      {tile.value}
+                    </button>
+                  );
+                })}
             </div>
           </div>
 

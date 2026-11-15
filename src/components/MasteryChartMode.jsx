@@ -40,7 +40,7 @@ export default function MasteryChartMode({ progress, onResetProgress }) {
               <span>12×12 Mastery Chart</span>
             </span>
             <span className="text-xs sm:text-sm text-indigo-200 hidden sm:inline">
-              Tap any square to inspect your stars & visual dot array!
+              Tap any square to inspect your stars!
             </span>
           </div>
 
@@ -185,33 +185,13 @@ export default function MasteryChartMode({ progress, onResetProgress }) {
               </div>
             </div>
 
-            <div className="py-3 px-4 rounded-2xl bg-indigo-950/80 border border-indigo-800 text-center mb-3">
+            <div className="py-3 px-4 rounded-2xl bg-indigo-950/80 border border-indigo-800 text-center">
               <div className="text-3xl sm:text-4xl font-extrabold text-white">
                 {selectedCell.r} × {selectedCell.c} ={' '}
                 <span className="text-amber-300">{selectedCell.r * selectedCell.c}</span>
               </div>
               <div className="text-xs text-indigo-300 mt-1 font-medium">
                 Solved {activeFactData.correct} times ({activeFactData.stars} / 3 Stars)
-              </div>
-            </div>
-
-            {/* Visual Array representation */}
-            <div className="p-3 rounded-2xl bg-indigo-950/60 border border-indigo-800/70 flex flex-col items-center">
-              <span className="text-xs text-indigo-200 mb-2 font-semibold">
-                {selectedCell.r} groups of {selectedCell.c} = {selectedCell.r * selectedCell.c}
-              </span>
-              <div
-                className="grid gap-1"
-                style={{
-                  gridTemplateColumns: `repeat(${selectedCell.c}, minmax(0, 1fr))`,
-                }}
-              >
-                {Array.from({ length: selectedCell.r * selectedCell.c }).map((_, i) => (
-                  <span
-                    key={i}
-                    className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-sm"
-                  />
-                ))}
               </div>
             </div>
           </div>
