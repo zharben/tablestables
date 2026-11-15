@@ -317,9 +317,9 @@ export default function GridDetectiveMode({ selectedTables, progress, onRecordAt
       </div>
 
       {/* Right Panel: Active Equation Prompt, Visual Dot Array Hint, & Number Tiles Tray */}
-      <div className="w-full lg:w-80 xl:w-96 flex flex-col gap-3 min-h-0">
+      <div className="w-full lg:w-80 xl:w-96 flex flex-col gap-3 min-h-0 max-h-[42%] lg:max-h-none shrink-0">
         {/* Current Active Clue Card */}
-        <div className="bg-indigo-900/80 backdrop-blur-md border border-indigo-700/60 rounded-3xl p-3.5 sm:p-4 shadow-xl flex flex-col justify-between">
+        <div className="bg-indigo-900/80 backdrop-blur-md border border-indigo-700/60 rounded-3xl p-3 sm:p-4 shadow-xl flex flex-col justify-between shrink-0 max-h-[55%] overflow-y-auto custom-scroll">
           {!roundComplete && activeTarget ? (
             <>
               <div className="flex items-center justify-between mb-1">
@@ -393,26 +393,26 @@ export default function GridDetectiveMode({ selectedTables, progress, onRecordAt
         </div>
 
         {/* Answer Tiles Tray */}
-        <div className="flex-1 bg-indigo-900/80 backdrop-blur-md border border-indigo-700/60 rounded-3xl p-3.5 sm:p-4 shadow-xl flex flex-col justify-between min-h-0">
-          <div>
-            <div className="flex items-center justify-between mb-2.5">
-              <span className="text-xs sm:text-sm font-bold text-indigo-200 flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>Answer Tiles (Tap to place)</span>
-              </span>
-              <button
-                onClick={() => {
-                  sound.playSelect();
-                  startNewRound();
-                }}
-                className="btn-tactile flex items-center gap-1 px-2.5 py-1 rounded-xl bg-indigo-800 hover:bg-indigo-700 text-indigo-200 text-xs font-bold"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>New Board</span>
-              </button>
-            </div>
+        <div className="flex-1 bg-indigo-900/80 backdrop-blur-md border border-indigo-700/60 rounded-3xl p-3 sm:p-4 shadow-xl flex flex-col min-h-0 overflow-hidden">
+          <div className="flex items-center justify-between mb-2.5 shrink-0">
+            <span className="text-xs sm:text-sm font-bold text-indigo-200 flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4 text-amber-400" />
+              <span>Answer Tiles (Tap to place)</span>
+            </span>
+            <button
+              onClick={() => {
+                sound.playSelect();
+                startNewRound();
+              }}
+              className="btn-tactile flex items-center gap-1 px-2.5 py-1 rounded-xl bg-indigo-800 hover:bg-indigo-700 text-indigo-200 text-xs font-bold"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>New Board</span>
+            </button>
+          </div>
 
-            <div className="grid grid-cols-5 lg:grid-cols-2 gap-2 sm:gap-2.5">
+          <div className="flex-1 min-h-0 overflow-y-auto custom-scroll pr-1 -mr-1 py-1">
+            <div className="grid grid-cols-5 lg:grid-cols-2 gap-2 sm:gap-2.5 pb-1">
               {tileOptions.map((tile) => {
                 const isSelected = selectedTileValue?.id === tile.id;
                 return (
@@ -441,7 +441,7 @@ export default function GridDetectiveMode({ selectedTables, progress, onRecordAt
                 sound.playSelect();
                 startNewRound();
               }}
-              className="btn-tactile mt-3 w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-400 text-emerald-950 font-extrabold text-base sm:text-lg shadow-lg border-b-4 border-emerald-600 flex items-center justify-center gap-2"
+              className="btn-tactile mt-3 w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-400 text-emerald-950 font-extrabold text-base sm:text-lg shadow-lg border-b-4 border-emerald-600 flex items-center justify-center gap-2 shrink-0"
             >
               <Sparkles className="w-5 h-5" />
               <span>Play Next Board!</span>

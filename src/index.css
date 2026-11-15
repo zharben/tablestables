@@ -14,6 +14,11 @@
   }
 }
 
+.custom-scroll {
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
 /* Custom subtle scrollbars for inner panels when needed on smaller tablets */
 .custom-scroll::-webkit-scrollbar {
   width: 6px;

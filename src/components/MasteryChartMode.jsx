@@ -165,8 +165,8 @@ export default function MasteryChartMode({ progress, onResetProgress }) {
         </div>
 
         {/* Selected Fact Inspector */}
-        <div className="flex-1 bg-indigo-900/80 backdrop-blur-md border border-indigo-700/60 rounded-3xl p-4 shadow-xl flex flex-col justify-between min-h-0">
-          <div>
+        <div className="flex-1 bg-indigo-900/80 backdrop-blur-md border border-indigo-700/60 rounded-3xl p-4 shadow-xl flex flex-col justify-between min-h-0 overflow-hidden">
+          <div className="flex-1 min-h-0 overflow-y-auto custom-scroll pr-1 -mr-1">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold uppercase tracking-wider text-indigo-300">
                 Fact Inspector
